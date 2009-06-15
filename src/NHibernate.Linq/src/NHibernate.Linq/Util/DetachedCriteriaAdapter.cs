@@ -46,6 +46,15 @@ namespace NHibernate.Linq.Util
 				return null;
 			}
 		}
+
+		public ICriteria SetProjection(params IProjection[] projection)
+		{
+			foreach (var p in projection)
+				_detachedCriteria.SetProjection(p);
+
+			return _detachedCriteria.Adapt(_session);
+		}
+
 		public ICriteria Add(ICriterion expression)
 		{
 			return _detachedCriteria.Add(expression).Adapt(_session);
@@ -174,11 +183,6 @@ namespace NHibernate.Linq.Util
 		public ICriteria SetMaxResults(int maxResults)
 		{
 			return _detachedCriteria.SetMaxResults(maxResults).Adapt(_session);
-		}
-
-		public ICriteria SetProjection(IProjection projection)
-		{
-			return _detachedCriteria.SetProjection(projection).Adapt(_session);
 		}
 
 		public ICriteria SetResultTransformer(IResultTransformer resultTransformer)
